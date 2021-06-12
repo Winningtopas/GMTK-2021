@@ -13,6 +13,11 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private GameObject gummyBearParticles;
 
+    [SerializeField]
+    private AudioSource eatSFX;
+    [SerializeField]
+    private AudioSource exhaleSFX;
+
     // Update is called once per frame
     void Update()
     {
@@ -23,6 +28,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (!returnToNormal)
         {
+            eatSFX.Play();
             if (transform.localScale.x < maxSize)
             {
                 float currentSizeIncrease = sizeincrease * magnitude;
@@ -33,6 +39,7 @@ public class PlayerManager : MonoBehaviour
         {
             Instantiate(gummyBearParticles, transform.position, Quaternion.identity);
             transform.localScale = Vector3.one;
+            exhaleSFX.Play();
         }
 
     }

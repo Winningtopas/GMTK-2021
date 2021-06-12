@@ -131,10 +131,10 @@ public class PlayerMovement : MonoBehaviour
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
 
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                rb.AddForce(moveDirection.normalized * ballSpeed * 100 * Time.deltaTime);
-            }
+            //if (Input.GetKeyDown(KeyCode.S))
+            //{
+            //    rb.AddForce(moveDirection.normalized * ballSpeed * 100 * Time.deltaTime);
+            //}
 
             if (isGrounded() && rb.velocity.magnitude < 50f)
             {
