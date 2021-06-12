@@ -21,7 +21,6 @@ public class PlayerColliders : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("collision");
         if(other.tag == "Candy")
         {
             gameManager.GetComponent<GameManager>().ManageResources(1);
