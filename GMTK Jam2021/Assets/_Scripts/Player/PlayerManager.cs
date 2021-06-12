@@ -5,10 +5,10 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField]
-    private float sizeincrease = 0.1f;
+    private float sizeincrease = 0.25f;
 
     [SerializeField]
-    private float maxSize = 2f;
+    private float maxSize = 5f;
 
     // Start is called before the first frame update
     void Start()

@@ -58,4 +58,11 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# FMOD docs
+/AudioProject/.cache
+/AudioProject/.user
+/AudioProject/.unsaved
+FMODStudioCache.asset
+fmod_editor.log
+
 GMTK Jam2021/Temp/UnityLockfile
