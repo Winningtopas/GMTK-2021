@@ -10,11 +10,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private float maxSize = 5f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
+    [SerializeField]
+    private GameObject gummyBearParticles;
 
     // Update is called once per frame
     void Update()
@@ -34,6 +31,7 @@ public class PlayerManager : MonoBehaviour
         }
         else
         {
+            Instantiate(gummyBearParticles, transform.position, Quaternion.identity);
             transform.localScale = Vector3.one;
         }
 
