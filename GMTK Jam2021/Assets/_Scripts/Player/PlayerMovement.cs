@@ -24,11 +24,14 @@ public class PlayerMovement : MonoBehaviour
 
     public bool ballMode = false;
 
+    [SerializeField]
+    private Collider[] legColliders;
+    
+    // ground distance stuff
     RaycastHit hit;
     private int layerMask = 1 << 8;
     [SerializeField]
     private float groundDistance = 15f;
-
     public bool isGround;
 
     private void Start()
@@ -67,11 +70,21 @@ public class PlayerMovement : MonoBehaviour
     public void AcitivateBallMode()
     {
         ballMode = true;
+        for(int i = 0; i < legColliders.Length;  i++)
+        {
+            legColliders[i].enabled = false;
+        }
     }
 
     public void AcitivateWalkMode()
     {
         ballMode = false;
+
+        for (int i = 0; i < legColliders.Length; i++)
+        {
+            legColliders[i].enabled = true;
+        }
+
         rb.velocity = Vector3.zero;
         rb.AddExplosionForce(popVelocity, transform.position, 10f, 3.0f, ForceMode.Impulse);
         //rb.AddForce(Vector3.up * popVelocity, ForceMode.Impulse);
