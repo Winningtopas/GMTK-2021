@@ -6,7 +6,9 @@ public class PlayerMovement : MonoBehaviour
 {
     public CharacterController controller;
     [SerializeField]
-    private float currentSpeed = 6f;
+    private float walkSpeed = 20f;
+    [SerializeField]
+    private float ballSpeed = 100f;
     [SerializeField]
     private float turnSmoothTime = 0.1f;
     private float turnSmoothvelocity;
@@ -23,7 +25,6 @@ public class PlayerMovement : MonoBehaviour
     private float groundDistance = 15f;
 
     public bool isGround;
-    public float value;
 
     private void Start()
     {
@@ -65,6 +66,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void WalkMode()
     {
+        // turn on leg colliders
+
         rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -78,13 +81,14 @@ public class PlayerMovement : MonoBehaviour
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothvelocity, turnSmoothTime);
 
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
-            transform.Translate(Vector3.forward * Time.deltaTime * currentSpeed);
+            transform.Translate(Vector3.forward * Time.deltaTime * walkSpeed);
         }
     }
 
     private void BallMode()
     {
         // TO DO: tween to 0 rotation
+        // turn off leg colliders
 
         rb.constraints = RigidbodyConstraints.None;
         rb.isKinematic = false;
@@ -101,11 +105,11 @@ public class PlayerMovement : MonoBehaviour
 
             if (isGrounded())
             {
-                rb.AddForce(moveDirection.normalized * currentSpeed * value * 2 * Time.deltaTime);
+                rb.AddForce(moveDirection.normalized * ballSpeed * 2 * Time.deltaTime);
             }
             else
             {
-                rb.AddForce(moveDirection.normalized * currentSpeed * value * Time.deltaTime);
+                rb.AddForce(moveDirection.normalized * ballSpeed * Time.deltaTime);
             }
         }
     }
