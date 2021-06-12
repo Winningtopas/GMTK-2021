@@ -13,21 +13,29 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    public void IncreasePlayerSize(int magnitude)
+    public void ChangePlayerSize(int magnitude, bool returnToNormal)
     {
-        if(transform.localScale.x < maxSize)
+        if (!returnToNormal)
         {
-            float currentSizeIncrease = sizeincrease * magnitude;
-            transform.localScale = transform.localScale + new Vector3(currentSizeIncrease, currentSizeIncrease, currentSizeIncrease);
+            if (transform.localScale.x < maxSize)
+            {
+                float currentSizeIncrease = sizeincrease * magnitude;
+                transform.localScale = transform.localScale + new Vector3(currentSizeIncrease, currentSizeIncrease, currentSizeIncrease);
+            }
         }
+        else
+        {
+            transform.localScale = Vector3.one;
+        }
+
     }
 }

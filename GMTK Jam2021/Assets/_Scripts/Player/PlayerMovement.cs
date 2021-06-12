@@ -10,6 +10,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float ballSpeed = 100f;
     [SerializeField]
+    private float popVelocity = 100f;
+
+    [SerializeField]
+    float maxBallSpeed = 50f;
+    [SerializeField]
     private float turnSmoothTime = 0.1f;
     private float turnSmoothvelocity;
 
@@ -64,6 +69,16 @@ public class PlayerMovement : MonoBehaviour
         ballMode = true;
     }
 
+    public void AcitivateWalkMode()
+    {
+        ballMode = false;
+        rb.velocity = Vector3.zero;
+        rb.AddExplosionForce(popVelocity, transform.position, 10f, 3.0f, ForceMode.Impulse);
+        //rb.AddForce(Vector3.up * popVelocity, ForceMode.Impulse);
+
+        //rb.AddForce(Vector3.up * popVelocity * Time.deltaTime);
+    }
+
     private void WalkMode()
     {
         // turn on leg colliders
@@ -103,11 +118,17 @@ public class PlayerMovement : MonoBehaviour
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
 
-            if (isGrounded())
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                rb.AddForce(moveDirection.normalized * ballSpeed * 100 * Time.deltaTime);
+            }
+
+            if (isGrounded() && rb.velocity.magnitude < 50f)
             {
                 rb.AddForce(moveDirection.normalized * ballSpeed * 2 * Time.deltaTime);
             }
-            else
+
+            if (!isGrounded())
             {
                 rb.AddForce(moveDirection.normalized * ballSpeed * Time.deltaTime);
             }

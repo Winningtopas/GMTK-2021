@@ -23,7 +23,12 @@ public class PlayerColliders : MonoBehaviour
     {
         if(other.tag == "Candy")
         {
-            gameManager.GetComponent<GameManager>().ManageResources(1);
+            gameManager.GetComponent<GameManager>().ManageResources(1, false);
+            Destroy(other.gameObject);
+        }
+        if (other.tag == "BadCandy")
+        {
+            gameManager.GetComponent<GameManager>().ManageResources(0, true);
             Destroy(other.gameObject);
         }
     }

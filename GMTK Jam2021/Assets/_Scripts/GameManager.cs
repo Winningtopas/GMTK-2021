@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -20,13 +20,23 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void ManageResources(int candyAmount)
+    public void ManageResources(int candyAmount, bool badCandy)
     {
-        candyCount += candyAmount;
-        player.GetComponent<PlayerManager>().IncreasePlayerSize(candyAmount);
-        if (candyCount >= 5)
+        if (badCandy)
         {
-            player.GetComponent<PlayerMovement>().AcitivateBallMode();
+            candyCount = 0;
+            player.GetComponent<PlayerManager>().ChangePlayerSize(0, true);
+            player.GetComponent<PlayerMovement>().AcitivateWalkMode();
         }
+        else
+        {
+            candyCount += candyAmount;
+            player.GetComponent<PlayerManager>().ChangePlayerSize(candyAmount, false);
+            if (candyCount >= 5)
+            {
+                player.GetComponent<PlayerMovement>().AcitivateBallMode();
+            }
+        }
+
     }
 }
