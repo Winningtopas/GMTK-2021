@@ -17,9 +17,33 @@ public class PlayerMovement : MonoBehaviour
 
     public bool ballMode = false;
 
+    RaycastHit hit;
+    private int layerMask = 1 << 8;
+    [SerializeField]
+    private float groundDistance = 15f;
+
+    public bool isGround;
+    public float value;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+    }
+
+    private bool isGrounded()
+    {
+        isGround = Physics.Raycast(transform.position, Vector3.down, out hit, groundDistance, layerMask);
+        return Physics.Raycast(transform.position, Vector3.down, out hit, groundDistance, layerMask);
+    }
+
+    private void Update()
+    {
+        Ground();
+    }
+
+    private void Ground()
+    {
+        Debug.DrawRay(transform.position, Vector3.down * groundDistance, Color.red);
     }
 
     private void FixedUpdate()
@@ -79,7 +103,15 @@ public class PlayerMovement : MonoBehaviour
 
             //controller.Move(moveDirection.normalized * currentSpeed * Time.deltaTime);
             //    Debug.Log(moveDirection.normalized * currentSpeed * Time.deltaTime);
-            rb.AddForce(moveDirection.normalized * currentSpeed * 200f * Time.deltaTime);
+
+            if (isGrounded())
+            {
+                rb.AddForce(moveDirection.normalized * currentSpeed * value * 2 * Time.deltaTime);
+            }
+            else
+            {
+                rb.AddForce(moveDirection.normalized * currentSpeed * value * Time.deltaTime);
+            }
         }
     }
 }
