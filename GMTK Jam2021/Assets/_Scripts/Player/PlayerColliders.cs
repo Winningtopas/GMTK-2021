@@ -9,6 +9,8 @@ public class PlayerColliders : MonoBehaviour
     private GameObject gameManager;
     [SerializeField]
     private float wallVelocity;
+    [SerializeField]
+    private float boostVelocity;
 
     private Rigidbody rb;
     private bool isColliding;
@@ -29,8 +31,8 @@ public class PlayerColliders : MonoBehaviour
     {
         if(other.tag == "Candy")
         {
-            gameManager.GetComponent<GameManager>().ManageResources(1, false);
             Destroy(other.gameObject);
+            gameManager.GetComponent<GameManager>().ManageResources(1, false);
         }
         if (other.tag == "BadCandy")
         {
@@ -50,7 +52,15 @@ public class PlayerColliders : MonoBehaviour
             }
         }
 
-        if(other.tag == "Finish")
+        if (other.tag == "HangingObject" && rb.velocity.magnitude > 30f)
+        {
+            if (GetComponent<PlayerMovement>().ballMode)
+            {
+                other.GetComponent<Rigidbody>().AddForce(Vector3.forward * wallVelocity, ForceMode.Impulse);
+            }
+        }
+
+        if (other.tag == "Finish")
         {
             StartCoroutine(StartNextLevel());
         }
@@ -58,6 +68,18 @@ public class PlayerColliders : MonoBehaviour
         if (other.tag == "ChocolateMilk")
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        if (other.tag == "BigCandy")
+        {
+            Destroy(other.gameObject);
+            gameManager.GetComponent<GameManager>().ManageResources(5, false);
+        }
+
+        if (other.tag == "BoostCandy")
+        {
+            Destroy(other.gameObject);
+            rb.AddForce(Vector3.forward * boostVelocity, ForceMode.Impulse);
         }
     }
 

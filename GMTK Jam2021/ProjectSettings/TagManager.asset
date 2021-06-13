@@ -8,6 +8,9 @@ TagManager:
   - BadCandy
   - PushableWall
   - ChocolateMilk
+  - BigCandy
+  - BoostCandy
+  - HangingObject
   layers:
   - Default
   - TransparentFX

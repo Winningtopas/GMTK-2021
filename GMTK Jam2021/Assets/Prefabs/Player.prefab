@@ -603,6 +603,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
   wallVelocity: 500
+  boostVelocity: 20
 --- !u!114 &3035090426570622000
 MonoBehaviour:
   m_ObjectHideFlags: 0
