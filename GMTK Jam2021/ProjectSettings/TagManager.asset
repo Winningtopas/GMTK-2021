@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Candy
   - BadCandy
+  - PushableWall
   layers:
   - Default
   - TransparentFX
