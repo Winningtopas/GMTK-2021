@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerColliders : MonoBehaviour
 {
@@ -43,5 +44,18 @@ public class PlayerColliders : MonoBehaviour
                 other.GetComponent<Rigidbody>().AddForce(Vector3.left * wallVelocity, ForceMode.Impulse);
             }
         }
+
+        if(other.tag == "Finish")
+        {
+            StartCoroutine(StartNextLevel());
+        }
+    }
+
+
+    private IEnumerator StartNextLevel()
+    {
+
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
