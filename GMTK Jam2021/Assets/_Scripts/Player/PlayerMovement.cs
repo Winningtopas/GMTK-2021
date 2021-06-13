@@ -23,9 +23,13 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
 
     public bool ballMode = false;
+    [SerializeField]
+    private AudioSource ballModeSFX;
 
     [SerializeField]
     private Collider[] legColliders;
+    [SerializeField]
+    private ParticleSystem speedParticles;
     
     // ground distance stuff
     RaycastHit hit;
@@ -47,7 +51,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        Ground();
+        //Ground();
+        SpeedParticles();
     }
 
     private void Ground()
@@ -69,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void AcitivateBallMode()
     {
+        ballModeSFX.Play();
         ballMode = true;
         for(int i = 0; i < legColliders.Length;  i++)
         {
@@ -145,6 +151,24 @@ public class PlayerMovement : MonoBehaviour
             {
                 rb.AddForce(moveDirection.normalized * ballSpeed * Time.deltaTime);
             }
+        }
+    }
+
+    private void SpeedParticles()
+    {
+        if(ballMode && rb.velocity.magnitude >= 30f)
+        {
+            ParticleSystem.EmissionModule ps = speedParticles.emission;
+            ParticleSystem.MinMaxCurve emissionAmount = ps.rateOverTime;
+            ps.rateOverTime = 30f;
+            //speedParticles.SetActive(true);
+        }
+        else
+        {
+            ParticleSystem.EmissionModule ps = speedParticles.emission;
+            ParticleSystem.MinMaxCurve emissionAmount = ps.rateOverTime;
+            ps.rateOverTime = 0f;
+            //speedParticles.SetActive(false);
         }
     }
 }

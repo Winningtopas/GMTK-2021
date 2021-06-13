@@ -36,7 +36,7 @@ public class PlayerColliders : MonoBehaviour
             Destroy(other.gameObject);
         }
 
-        if (other.tag == "PushableWall" && rb.velocity.magnitude > 20f)
+        if (other.tag == "PushableWall" && rb.velocity.magnitude > 30f)
         {
             if (GetComponent<PlayerMovement>().ballMode)
             {

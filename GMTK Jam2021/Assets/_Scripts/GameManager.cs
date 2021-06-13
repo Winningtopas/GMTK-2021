@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject player;
+    public GameObject player;
     public int candyCount = 0;
+    public bool ballMode;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     {
         if (badCandy)
         {
+            ballMode = false;
             candyCount = 0;
             player.GetComponent<PlayerManager>().ChangePlayerSize(0, true);
             player.GetComponent<PlayerMovement>().AcitivateWalkMode();
@@ -32,8 +33,9 @@ public class GameManager : MonoBehaviour
         {
             candyCount += candyAmount;
             player.GetComponent<PlayerManager>().ChangePlayerSize(candyAmount, false);
-            if (candyCount >= 5)
+            if (candyCount >= 5 && !ballMode)
             {
+                ballMode = true;
                 player.GetComponent<PlayerMovement>().AcitivateBallMode();
             }
         }
