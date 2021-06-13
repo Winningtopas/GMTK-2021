@@ -11,6 +11,7 @@ public class PlayerColliders : MonoBehaviour
     private float wallVelocity;
 
     private Rigidbody rb;
+    private bool isColliding;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +22,7 @@ public class PlayerColliders : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        isColliding = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -33,8 +34,12 @@ public class PlayerColliders : MonoBehaviour
         }
         if (other.tag == "BadCandy")
         {
-            gameManager.GetComponent<GameManager>().ManageResources(0, true);
+            if (isColliding) return;
+            isColliding = true;
+
             Destroy(other.gameObject);
+            gameManager.GetComponent<GameManager>().ManageResources(0, true);
+            Debug.Log("Collide bad candy");
         }
 
         if (other.tag == "PushableWall" && rb.velocity.magnitude > 30f)
@@ -48,6 +53,11 @@ public class PlayerColliders : MonoBehaviour
         if(other.tag == "Finish")
         {
             StartCoroutine(StartNextLevel());
+        }
+
+        if (other.tag == "ChocolateMilk")
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 

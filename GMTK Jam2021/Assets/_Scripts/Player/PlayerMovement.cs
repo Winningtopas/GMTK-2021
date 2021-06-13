@@ -91,8 +91,11 @@ public class PlayerMovement : MonoBehaviour
             legColliders[i].enabled = true;
         }
 
+        Debug.Log("STOP");
         rb.velocity = Vector3.zero;
-        rb.AddExplosionForce(popVelocity, transform.position, 10f, 3.0f, ForceMode.Impulse);
+        rb.AddForce(Vector3.up * popVelocity, ForceMode.Impulse);
+
+        //rb.AddExplosionForce(popVelocity, transform.position, 10f, 3.0f, ForceMode.Impulse);
         //rb.AddForce(Vector3.up * popVelocity, ForceMode.Impulse);
 
         //rb.AddForce(Vector3.up * popVelocity * Time.deltaTime);
